@@ -5,16 +5,21 @@
 
     <h1><xsl:value-of select="/Article/Title"/></h1>
 
-    <xsl:apply-templates select="/Article/Authors/Author"/>
+    <xsl:apply-templates select="/Article/Author"/>
 
-      <xsl:for-each select="/Body">
-        <p><xsl:value-of select="Paragraph" /></p>           
-      </xsl:for-each>
+    <xsl:apply-templates select="/Body/Paragraph"/>
 
+  
   </xsl:template>
 
   <xsl:template match="Author">
-    - <em><xsl:value-of select="." /></em>
+    <em><xsl:value-of select="." /></em>
+  </xsl:template>
+
+  <xsl:template match="Paragraph">
+    <xsl:for-each select="/Body">
+      <p><xsl:value-of select="Paragraph" /></p>           
+    </xsl:for-each>
   </xsl:template>
 
 </xsl:stylesheet>
