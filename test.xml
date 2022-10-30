@@ -15,11 +15,11 @@
       when there were only 23 500 unique sites. Yes I was on a shared domain, but still the world was small.
       Remember that Google first started in 1998 when the size increased to 2 410 067. In 1995 Altavista
       and Yahoo was as close as you could get to finding  out where things were back then.
-      <link="http://www.internetlivestats.com/total-number-of-websites/">Source</link>
+      <link href="http://www.internetlivestats.com/total-number-of-websites/">Source</link>
      </Paragraph>
 
      <Paragraph>
-        In 2022 the company “Set Lonnert Humanistics & Technology” celebrated its 25th birthday. During
+        In 2022 the company “Set Lonnert Humanistics &amp; Technology” celebrated its 25th birthday. During
         the years I have been involved with writing articles, a little pamphlet early on programming in Java,
         educated people in programming, worked as a freelance computer journalist,  discussed thoughts on
         computers and future technology, much much programming during the 90ties, etc.
@@ -40,10 +40,10 @@
      </Paragraph>
 
      <Colophon>
-        The company Set Lonnert Humanistics & Technology (SLHT) established 1997 produces foremost programs,
+        The company Set Lonnert Humanistics &amp; Technology (SLHT) established 1997 produces foremost programs,
         articles, books, different paper works, keeps with journalistic missions, educational materials and
         lectures, in the general computer area.
-        A <link="https://feyerabend.github.io/assets/pdfs/publ.pdf">selection</link> of printed articles.
+        A <link href="https://feyerabend.github.io/assets/pdfs/publ.pdf">selection</link> of printed articles.
      </Colophon>
   </Body>
 </Article>
