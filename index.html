@@ -1,56 +1,154 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>I N T R O</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.content-wrapper {
+  position: relative;
+  min-height: 400px;
+}
+
+.profile-image {
+  float: left;
+  width: 250px;
+  height: auto;
+  margin: 0 20px 20px 0;
+}
+
+.widget-box {
+  float: right;
+  width: 200px;
+  margin: 0 0 20px 20px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.text-content p {
+  margin-bottom: 1em;
+  text-align: justify;
+}
+
+.footer-text {
+  clear: both;
+  font-style: italic;
+  margin-top: 30px;
+  padding: 15px;
+  background: #f5f5f5;
+  border-left: 3px solid #333;
+}
+
+@media (max-width: 768px) {
+  .profile-image,
+  .widget-box {
+    float: none;
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+}
+</style>
 </head>
 <body>
 
-<div>
-<img src="https://feyerabend.github.io/assets/images/set.jpg" style="float: left; margin: 0px 15px 15px 0px;"/>
+<main>
+  <div class="content-wrapper">
+    
+    <img src="https://feyerabend.github.io/assets/images/set.jpg" alt="Set Lonnert" class="profile-image">
+    
+    <div class="widget-box">
+      <!-- ### Begin BoD ShopWidget -->
+      <div id="bodShopWidget_6046829_print" class="bodShopWidget"></div>
+      <script type="text/javascript">
+        if(typeof checkLibExist == "undefined"){
+          var script = document.createElement("script");
+          script.src ="https://assets.bod.com/shopwidget/build/js/v1.1/shopWidget.min.js";
+          script.type = "text/javascript";
+          document.head.appendChild(script);
+          var checkLibExist = true;
+        }
+        if(typeof books === "undefined") var books=[];
+        books.push({
+          "objID":6046829,
+          "swKey":"17fca82454b66db23aaee5f55fb00002",
+          "type":"print",
+          "size":"small",
+          "font":"serif",
+          "shadow":false,
+          "contour":true,
+          "coverContour":true,
+          "fontColor":"#212529",
+          "contourColor":"#212529",
+          "shadowBtn":false,
+          "contourBtn":false,
+          "bgColor":"#F3F7D7",
+          "btnFontColor":"#fff",
+          "btnColor":"#0A0A0A",
+          "btnContourColor":"#fd6041",
+          "mandantShopUrl":"https://bokshop.bod.se",
+          "lang":"se"
+        });
+      </script>
+      <!-- ### End BoD ShopWidget -->
+    </div>
+    
+    <div class="text-content">
+      <p>
+        Interview from Internetguiden no. 9 1995. I already had a homepage when the net was young in 1995,
+        when there were only 23 500 unique sites. Yes I was on a shared domain, but still the world was small.
+        Remember that Google first started in 1998 when the size increased to 2 410 067. In 1995 Altavista
+        and Yahoo was as close as you could get to finding out where things were back then.
+        [<a href="http://www.internetlivestats.com/total-number-of-websites/">Source</a>]
+      </p>
 
-<p>
-Interview from Internetguiden no. 9 1995. I already had a homepage when the net was young in 1995,
-when there were only 23 500 unique sites. Yes I was on a shared domain, but still the world was small.
-Remember that Google first started in 1998 when the size increased to 2 410 067. In 1995 Altavista
-and Yahoo was as close as you could get to finding  out where things were back then.
-[<a href="http://www.internetlivestats.com/total-number-of-websites/">Source</a>]
-</p>
+      <p>
+        In 2022 the company "Set Lonnert Humanistics &amp; Technology" celebrated its 25th
+        birthday. During the years I have been involved with writing articles, a little pamphlet
+        early on programming in Java, educated people in programming, worked as a freelance computer
+        journalist, discussed thoughts on computers and future technology, much much programming
+        during the 90'ties, etc.
+      </p>
 
-<p>
-In 2022 the company &quot;Set Lonnert Humanistics &amp; Technology&quot; celebrated its 25th
-birthday. During the years I have been involved with writing articles, a little pamphlet
-early on programming in Java, educated people in programming, worked as a freelance computer
-journalist,  discussed thoughts on computers and future technology, much much programming
-during the 90'ties, etc.
-</p>
+      <p>
+        During these years I have tried to combine my interests in the humanities and technology in every
+        wide sense of these concepts.
+      </p>
 
-<p>
-During these years I have tried to combine my interests in the humanities and technology in every
-wide sense of these concepts.
-</p>
+      <p>
+        I would like to bring you a better understanding of computing in general, and to specific areas of
+        interest. I have a background in what maybe apprehended as the outdated analytical philosophy; often
+        appreciated as replaced by science proper. But precisely the analytical could play an important role
+        in clarity and simplicity of concepts used in this field. My experience with computers since the
+        late 70'ties, and a combination with academical humanistics gives another perspective on the current
+        and future connections to society, that usually is underlined within the business. I hope.
+      </p>
+    </div>
+    
+  </div>
+  
+  <div class="footer-text">
+    The company Set Lonnert Humanistics &amp; Technology (SLHT) established 1997 produces foremost programs,
+    articles, books, different paper works, keeps with journalistic missions, educational materials and
+    lectures, in the general computer area.
+    A [<a href="https://feyerabend.github.io/assets/pdfs/publ.pdf">selection</a>] of printed articles.
+  </div>
+  
+</main>
 
-<p>
-I would like to bring you a better understanding of computing in general, and to specific areas of
-interest. I have a background in what maybe apprehended as the outdated analytical philosophy; often
-appreciated as replaced by science proper. But precisely the analytical could play an important role
-in clarity and simplicity of concepts used in this field. My experience with computers since the
-late 70'ties, and a combination with academical humanistics gives another perspective on the current
-and future connections to society, that usually is underlined within the business. I hope.
-</p>
-
-<p>
-An upcomming <a href="https://github.com/Feyerabend/cc">book</a> will be published on <a href="https://bod.com">bod.com</a> 2026-01-01.
-</p>
-<p>
-<em>
-The company Set Lonnert Humanistics & Technology (SLHT) established 1997 produces foremost programs,
-articles, books, different paper works, keeps with journalistic missions, educational materials and
-lectures, in the general computer area.
-A [<a href="https://feyerabend.github.io/assets/pdfs/publ.pdf">selection</a>] of printed articles.
-</em>
-</p>
-</div>
-	
 </body>
 </html>
