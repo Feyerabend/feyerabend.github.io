@@ -1,159 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>I N T R O</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Lonnert – Humanistics & Technology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=IBM+Plex+Mono:wght@300;400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #fafaf8;
+            --bg-secondary: #f0ede6;
+            --text-primary: #1a1814;
+            --text-secondary: #5a5550;
+            --accent: #c42836;
+            --accent-soft: #db5a65;
+            --border: #d4cfc5;
+            --highlight: #fff5f6;
+            --red-tint: rgba(196, 40, 54, 0.03);
+        }
 
-body {
-  font-family: Georgia, 'Times New Roman', serif;
-  line-height: 1.6;
-  padding: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.content-wrapper {
-  position: relative;
-  min-height: 400px;
-}
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, #faf8f8 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-.profile-image {
-  float: left;
-  width: 250px;
-  height: auto;
-  margin: 0 20px 20px 0;
-}
+        /* Animated grain texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain 8s steps(10) infinite;
+        }
 
-.widget-box {
-  float: right;
-  width: 200px;
-  margin: 0 0 20px 20px;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 5px;
-}
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
 
-.text-content p {
-  margin-bottom: 1em;
-  text-align: justify;
-}
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
 
-.footer-text {
-  clear: both;
-  font-style: italic;
-  margin-top: 30px;
-  padding: 15px;
-  background: #f5f5f5;
-  border-left: 3px solid #333;
-}
+        /* Header */
+        header {
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            animation: slideDown 0.8s ease-out;
+        }
 
-@media (max-width: 768px) {
-  .profile-image,
-  .widget-box {
-    float: none;
-    width: 100%;
-    margin: 0 0 20px 0;
-  }
-}
-</style>
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .site-title {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            font-variation-settings: "opsz" 144;
+        }
+
+        .site-title .ampersand {
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        .site-subtitle {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-image {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.05);
+            transition: transform 0.6s ease;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(196, 40, 54, 0.12) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            padding-top: 2rem;
+        }
+
+        .intro-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--highlight);
+            border-left: 3px solid var(--accent);
+        }
+
+        .intro-text {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .intro-text strong {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .timeline-note {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--border);
+            margin: 2rem 0;
+            font-weight: 300;
+        }
+
+        /* Featured Work */
+        .featured {
+            padding: 5rem 0;
+            border-top: 1px solid var(--border);
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        .section-header {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+            font-variation-settings: "opsz" 120;
+        }
+
+        .featured-book {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, var(--highlight) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 0 0 rgba(196, 40, 54, 0);
+        }
+
+        .featured-book:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(196, 40, 54, 0.08);
+        }
+
+        .featured-book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .book-cover {
+            aspect-ratio: 2/3;
+            background: linear-gradient(135deg, #2a2624 0%, #4a423d 100%);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .book-cover-text {
+            font-family: 'Fraunces', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fafaf8;
+            text-align: center;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+
+        .book-details h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .book-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .book-details a {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .book-details a:hover {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 5rem 0;
+            border-top: 1px solid var(--border);
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .philosophy-card {
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .philosophy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .philosophy-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .philosophy-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196, 40, 54, 0.1);
+            background: linear-gradient(135deg, var(--highlight) 0%, var(--bg-secondary) 100%);
+        }
+
+        .philosophy-card h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .philosophy-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 5rem;
+            animation: fadeIn 1s ease-out 1.2s both;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-brand h4 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-column h5 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-column a {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .featured-book {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .book-cover {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            header {
+                padding: 2rem 0 1.5rem;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            .featured, .philosophy {
+                padding: 3rem 0;
+            }
+
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        /* Scroll-triggered animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1 class="site-title">Set Lonnert<br>Humanistics <span class="ampersand">&</span> Technology</h1>
+            <p class="site-subtitle">Since 1980 • Humanistics • Philosophy • Computing</p>
+        </header>
 
-<main>
-  <div class="content-wrapper">
-    
-    <img src="https://feyerabend.github.io/assets/images/set.jpg" alt="Set Lonnert" class="profile-image">
-    
-    <div class="widget-box">
-      <!-- ### Begin BoD ShopWidget -->
-      <div id="bodShopWidget_6046829_print" class="bodShopWidget"></div>
-      <script type="text/javascript">
-        if(typeof checkLibExist == "undefined"){
-          var script = document.createElement("script");
-          script.src ="https://assets.bod.com/shopwidget/build/js/v1.1/shopWidget.min.js";
-          script.type = "text/javascript";
-          document.head.appendChild(script);
-          var checkLibExist = true;
-        }
-        if(typeof books === "undefined") var books=[];
-        books.push({
-          "objID":6046829,
-          "swKey":"17fca82454b66db23aaee5f55fb00002",
-          "type":"print",
-          "size":"small",
-          "font":"serif",
-          "shadow":false,
-          "contour":true,
-          "coverContour":true,
-          "fontColor":"#212529",
-          "contourColor":"#212529",
-          "shadowBtn":false,
-          "contourBtn":false,
-          "bgColor":"#F3F7D7",
-          "btnFontColor":"#fff",
-          "btnColor":"#0A0A0A",
-          "btnContourColor":"#fd6041",
-          "mandantShopUrl":"https://bokshop.bod.se",
-          "lang":"se"
-        });
-      </script>
-      <!-- ### End BoD ShopWidget -->
+        <section class="hero">
+            <div class="hero-image">
+                <img src="https://feyerabend.github.io/assets/images/set.jpg" alt="Set Lonnert">
+            </div>
+            <div class="hero-content">
+                <span class="intro-label">Since 1980</span>
+                <p class="intro-text">
+                    <strong>Combining humanities and technology</strong> since 1980. 
+                    When there were only 23,500 websites in 1995, I had already been working with computers 
+                    for fifteen years, exploring the intersection of analytical philosophy and computing—a 
+                    perspective that remains crucial for bringing clarity and simplicity to our digital world.
+                </p>
+                <p class="intro-text">
+                    With experience spanning over four decades and academic training in the humanities, 
+                    I bring a unique lens to understanding how technology shapes society and human experience.
+                </p>
+                <div class="timeline-note">
+                    <strong>1980:</strong> Computing journey begins<br>
+                    <strong>1995:</strong> 23,500 websites, homepage launched<br>
+                    <strong>1998:</strong> 2.4M websites (Google launches)<br>
+                    <strong>2022:</strong> SLHT celebrates 25 years<br>
+                    <strong>Today:</strong> Still bridging worlds
+                </div>
+            </div>
+        </section>
+
+        <section class="featured">
+            <h2 class="section-header">Featured Work</h2>
+            <div class="featured-book">
+                <div class="book-cover">
+                    <div class="book-cover-text">From Code<br>to<br>Computation</div>
+                </div>
+                <div class="book-details">
+                    <h3>From Code to Computation (2026)</h3>
+                    <p>
+                        A comprehensive exploration of computing from first principles, examining the philosophical 
+                        and practical foundations that underpin our digital age. Available at major bookstores.
+                    </p>
+                    <p style="margin-top: 1.5rem;">
+                        <a href="https://github.com/Feyerabend/cc/tree/main" target="_blank">View Repository →</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="philosophy">
+            <h2 class="section-header">Philosophy in Practice</h2>
+            <div class="philosophy-grid">
+                <div class="philosophy-card">
+                    <h3>Analytical Clarity</h3>
+                    <p>
+                        Bringing the precision of analytical philosophy to the often murky world of technology. 
+                        Clear concepts lead to better understanding and more thoughtful implementation.
+                    </p>
+                </div>
+                <div class="philosophy-card">
+                    <h3>Historical Perspective</h3>
+                    <p>
+                        Over four decades of computing experience provides context that's invaluable for 
+                        understanding current trends and anticipating future developments.
+                    </p>
+                </div>
+                <div class="philosophy-card">
+                    <h3>Humanistic Technology</h3>
+                    <p>
+                        Technology exists within society, not separate from it. Every technical decision 
+                        has human implications that deserve careful consideration.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h4>Set Lonnert Humanistics & Technology</h4>
+                    <p>
+                        Established 1997<br>
+                        Programming • Writing • Education<br>
+                        Articles • Books • Lectures
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="https://feyerabend.github.io/assets/pdfs/publ.pdf" target="_blank">Publications</a>
+                        <a href="https://github.com/Feyerabend/cc/tree/main" target="_blank">GitHub Repository</a>
+                    </div>
+                    <div class="footer-column">
+                        <h5>About</h5>
+                        <!--<a href="#">Background</a>-->
+                        <a href="mailto:setlonnert@gmail.com">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                © 1997–2026 Set Lonnert Humanistics & Technology. Est. when the web was young.
+            </div>
+        </footer>
     </div>
-    
-    <div class="text-content">
-      <p>
-        Interview from Internetguiden no. 9 1995. I already had a homepage when the net was young in 1995,
-        when there were only 23 500 unique sites. Yes I was on a shared domain, but still the world was small.
-        Remember that Google first started in 1998 when the size increased to 2 410 067. In 1995 Altavista
-        and Yahoo was as close as you could get to finding out where things were back then.
-        [<a href="http://www.internetlivestats.com/total-number-of-websites/">Source</a>]
-      </p>
 
-      <p>
-        In 2022 the company "Set Lonnert Humanistics &amp; Technology" celebrated its 25th
-        birthday. During the years I have been involved with writing articles, a little pamphlet
-        early on programming in Java, educated people in programming, worked as a freelance computer
-        journalist, discussed thoughts on computers and future technology, much much programming
-        during the 90'ties, etc.
-      </p>
+    <script>
+        // Scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-      <p>
-        During these years I have tried to combine my interests in the humanities and technology in every
-        wide sense of these concepts.
-      </p>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-      <p>
-        I would like to bring you a better understanding of computing in general, and to specific areas of
-        interest. I have a background in what maybe apprehended as the outdated analytical philosophy; often
-        appreciated as replaced by science proper. But precisely the analytical could play an important role
-        in clarity and simplicity of concepts used in this field. My experience with computers since the
-        late 70'ties, and a combination with academical humanistics gives another perspective on the current
-        and future connections to society, that usually is underlined within the business. I hope.
-      </p>
-
-      <p>
-        <em>From Code to Computation</em> (2026) is available at major bookstores.
-        Additional details are available in the <a href="https://github.com/Feyerabend/cc/tree/main">repository</a>.
-      </p>
-    </div>
-    
-  </div>
-  
-  <div class="footer-text">
-    The company Set Lonnert Humanistics &amp; Technology (SLHT) established 1997 produces foremost programs,
-    articles, books, different paper works, keeps with journalistic missions, educational materials and
-    lectures, in the general computer area.
-    A [<a href="https://feyerabend.github.io/assets/pdfs/publ.pdf">selection</a>] of printed articles.
-  </div>
-  
-</main>
-
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
