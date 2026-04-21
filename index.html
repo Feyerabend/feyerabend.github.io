@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=IBM+Plex+Mono:wght@300;400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         :root {
             --bg-primary: #fafaf8;
@@ -18,6 +19,8 @@
             --border: #d4cfc5;
             --highlight: #fff5f6;
             --red-tint: rgba(196, 40, 54, 0.03);
+            --fpw: 320px;
+            --fph: 453px;
         }
 
         * {
@@ -251,24 +254,237 @@
         }
 
         .book-cover {
-            aspect-ratio: 2/3;
-            background: linear-gradient(135deg, #2a2624 0%, #4a423d 100%);
             border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
         }
 
-        .book-cover-text {
-            font-family: 'Fraunces', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
+        .book-cover img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .book-cover:hover img {
+            transform: scale(1.03);
+        }
+
+        .book-cover-hint {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.58) 0%, transparent 55%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.4rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .book-cover:hover .book-cover-hint {
+            opacity: 1;
+        }
+
+        .book-cover-hint span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: #fafaf8;
+        }
+
+        /* ── Flipbook modal ── */
+        .flip-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            background: rgba(8,6,4,0.90);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .flip-modal.open { display: flex; }
+
+        .flip-inner {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            max-width: 100%;
+        }
+
+        .flip-close {
+            position: absolute;
+            top: -2.6rem;
+            right: 0;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.22);
+            color: rgba(255,255,255,0.65);
+            font-size: 1.1rem;
+            line-height: 1;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-family: 'IBM Plex Mono', monospace;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .flip-close:hover { border-color: var(--accent-soft); color: #fafaf8; }
+
+        .flip-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 3rem 4rem;
+        }
+
+        .flip-prog-track {
+            width: 220px;
+            height: 2px;
+            background: rgba(255,255,255,0.12);
+            overflow: hidden;
+        }
+
+        .flip-prog-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            transition: width 0.25s ease;
+        }
+
+        .flip-loading-msg {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.73rem;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.08em;
+        }
+
+        .flip-book-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .flip-spread {
+            display: flex;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.55);
+        }
+
+        .flip-page {
+            width: var(--fpw);
+            height: var(--fph);
+            overflow: hidden;
+            background: #fefefc;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .flip-page img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .flip-pl { box-shadow: inset -5px 0 16px rgba(0,0,0,0.08); }
+        .flip-pr { box-shadow: inset  5px 0 16px rgba(0,0,0,0.08); }
+        .flip-blank { background: linear-gradient(110deg, #f4f0e8 0%, #e8e2d4 100%); }
+
+        .flip-spine {
+            width: 10px;
+            flex-shrink: 0;
+            background: linear-gradient(90deg, #7a6a50 0%, #b89a68 45%, #7a6a50 100%);
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+
+        .flip-pnum {
+            position: absolute;
+            bottom: 9px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.62rem;
+            color: #bbb;
+            pointer-events: none;
+        }
+
+        .flip-pl .flip-pnum { left: 12px; }
+        .flip-pr .flip-pnum { right: 12px; }
+
+        .flip-leaf {
+            position: absolute;
+            top: 0;
+            height: var(--fph);
+            transform-style: preserve-3d;
+            pointer-events: none;
+            z-index: 20;
+            will-change: transform;
+        }
+
+        .flip-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+            background: #fefefc;
+        }
+
+        .flip-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .flip-face-back { transform: rotateY(180deg); }
+
+        .flip-shade {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 15;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .flip-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.6rem;
+        }
+
+        .flip-nav {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 0.5rem 1.2rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.73rem;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            color: rgba(255,255,255,0.7);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .flip-nav:hover:not(:disabled) { border-color: var(--accent-soft); color: #fafaf8; }
+        .flip-nav:disabled { opacity: 0.22; cursor: not-allowed; }
+
+        .flip-info {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.38);
+            min-width: 110px;
             text-align: center;
-            line-height: 1.3;
-            letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 580px) {
+            .flip-pl, .flip-spine { display: none !important; }
         }
 
         .book-details h3 {
@@ -525,8 +741,10 @@
         <section class="featured">
             <h2 class="section-header">Featured Work</h2>
             <div class="featured-book">
-                <div class="book-cover">
-                    <div class="book-cover-text">From Code<br>to<br>Computation</div>
+                <div class="book-cover" id="flip-trigger" role="button" tabindex="0"
+                     title="Browse inside">
+                    <img src="assets/images/omslag.jpg" alt="From Code to Computation – cover">
+                    <div class="book-cover-hint"><span>Browse inside →</span></div>
                 </div>
                 <div class="book-details">
                     <h3>From Code to Computation (2026)</h3>
@@ -597,6 +815,37 @@
         </footer>
     </div>
 
+    <!-- Flipbook modal -->
+    <div class="flip-modal" id="flip-modal" role="dialog" aria-modal="true" aria-label="Flipbook viewer">
+        <div class="flip-inner">
+            <button class="flip-close" id="flip-close" aria-label="Close">×</button>
+
+            <div class="flip-loading" id="flip-loading">
+                <div class="flip-prog-track">
+                    <div class="flip-prog-bar" id="flip-prog"></div>
+                </div>
+                <span class="flip-loading-msg" id="flip-msg">Loading…</span>
+            </div>
+
+            <div class="flip-book-wrap" id="flip-book-wrap">
+                <div class="flip-spread" id="flip-spread">
+                    <div class="flip-page flip-pl flip-blank" id="flip-pl">
+                        <span class="flip-pnum" id="flip-lnum"></span>
+                    </div>
+                    <div class="flip-spine" id="flip-spine-el"></div>
+                    <div class="flip-page flip-pr" id="flip-pr">
+                        <span class="flip-pnum" id="flip-rnum"></span>
+                    </div>
+                </div>
+                <div class="flip-controls">
+                    <button class="flip-nav" id="flip-prev" disabled>← Prev</button>
+                    <span   class="flip-info" id="flip-info">1 / 1</span>
+                    <button class="flip-nav" id="flip-next">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Scroll-triggered animations
         const observerOptions = {
@@ -613,6 +862,209 @@
         }, observerOptions);
 
         document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+    </script>
+
+    <script>
+    // ── Flipbook ──
+    (function () {
+        'use strict';
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const COVER_URL = 'assets/images/omslag.jpg';
+        const PDF_URL   = 'assets/pdfs/flip.pdf';
+
+        const pages  = [];
+        let spread   = 0;
+        let nSpreads = 0;
+        let flipAnim = false;
+        let loaded   = false;
+
+        const modal    = document.getElementById('flip-modal');
+        const loadDiv  = document.getElementById('flip-loading');
+        const bookWrap = document.getElementById('flip-book-wrap');
+        const progEl   = document.getElementById('flip-prog');
+        const msgEl    = document.getElementById('flip-msg');
+        const fSpread  = document.getElementById('flip-spread');
+        const pl       = document.getElementById('flip-pl');
+        const pr       = document.getElementById('flip-pr');
+        const spineEl  = document.getElementById('flip-spine-el');
+        const prevBtn  = document.getElementById('flip-prev');
+        const nextBtn  = document.getElementById('flip-next');
+        const infoEl   = document.getElementById('flip-info');
+        const lnum     = document.getElementById('flip-lnum');
+        const rnum     = document.getElementById('flip-rnum');
+
+        // Open / close
+        function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; if (!loaded) loadPages(); }
+        function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+        document.getElementById('flip-trigger').addEventListener('click', openModal);
+        document.getElementById('flip-trigger').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(); });
+        document.getElementById('flip-close').addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (!modal.classList.contains('open')) return;
+            if (e.key === 'Escape')    closeModal();
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flipForward();
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   flipBack();
+        });
+        prevBtn.addEventListener('click', () => flipBack());
+        nextBtn.addEventListener('click', () => flipForward());
+
+        // Load pages
+        async function loadPages() {
+            loadDiv.style.display  = 'flex';
+            bookWrap.style.display = 'none';
+
+            pages.push(COVER_URL);   // cover: use URL directly
+
+            msgEl.textContent = 'Loading PDF…';
+            const buf = await fetch(PDF_URL).then(r => r.arrayBuffer());
+            msgEl.textContent = 'Parsing…';
+            const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+            const n   = pdf.numPages;
+
+            // Scale to fit modal
+            const p1  = await pdf.getPage(1);
+            const vp1 = p1.getViewport({ scale: 1 });
+            const maxH = Math.round(window.innerHeight * 0.72);
+            const maxW = Math.round((window.innerWidth  * 0.82) / 2);
+            const s   = Math.min(maxH / vp1.height, maxW / vp1.width, 1.8);
+            const vps = p1.getViewport({ scale: s });
+            document.documentElement.style.setProperty('--fpw', Math.round(vps.width)  + 'px');
+            document.documentElement.style.setProperty('--fph', Math.round(vps.height) + 'px');
+
+            for (let i = 1; i <= n; i++) {
+                msgEl.textContent = 'Rendering ' + i + ' / ' + n + '…';
+                progEl.style.width = ((i / n) * 100) + '%';
+                const page = await pdf.getPage(i);
+                const vp   = page.getViewport({ scale: s });
+                const cv   = document.createElement('canvas');
+                cv.width   = Math.round(vp.width);
+                cv.height  = Math.round(vp.height);
+                await page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+                pages.push(cv.toDataURL('image/jpeg', 0.93));
+            }
+
+            loaded   = true;
+            nSpreads = 1 + Math.ceil(Math.max(pages.length - 1, 0) / 2);
+            spread   = 0;
+            renderSpread();
+            loadDiv.style.display  = 'none';
+            bookWrap.style.display = 'flex';
+        }
+
+        // Spread helpers
+        function getSpread(idx) {
+            if (idx === 0) return [null, pages[0]];
+            return [pages[2 * idx - 1] || null, pages[2 * idx] || null];
+        }
+
+        function renderSpread() {
+            const [l, r] = getSpread(spread);
+            setPage(pl, l);
+            setPage(pr, r);
+            lnum.textContent = (spread > 0 && pages[2 * spread - 1]) ? String(2 * spread - 1) : '';
+            rnum.textContent = spread === 0 ? 'Cover' : (pages[2 * spread] ? String(2 * spread) : '');
+            prevBtn.disabled = spread === 0;
+            nextBtn.disabled = spread >= nSpreads - 1;
+            infoEl.textContent = (spread + 1) + ' / ' + nSpreads;
+        }
+
+        function setPage(el, src) {
+            const numEl = el.querySelector('.flip-pnum');
+            el.innerHTML = '';
+            el.appendChild(numEl);
+            if (src) {
+                el.classList.remove('flip-blank');
+                const img = new Image();
+                img.src = src;
+                el.insertBefore(img, numEl);
+            } else {
+                el.classList.add('flip-blank');
+            }
+        }
+
+        // Navigation
+        function flipForward() {
+            if (flipAnim || spread >= nSpreads - 1) return;
+            const [, curR]  = getSpread(spread);
+            const [nL, nR]  = getSpread(spread + 1);
+            doFlip('forward', curR, nL, nR, () => { spread++; renderSpread(); });
+        }
+
+        function flipBack() {
+            if (flipAnim || spread <= 0) return;
+            const [curL]   = getSpread(spread);
+            const [pL, pR] = getSpread(spread - 1);
+            doFlip('backward', curL, pR, pL, () => { spread--; renderSpread(); });
+        }
+
+        function doFlip(dir, frontSrc, backSrc, otherSrc, onDone) {
+            flipAnim = true;
+            const sW = spineEl.offsetWidth || 10;
+            const lW = pl.offsetWidth;
+            const rW = pr.offsetWidth;
+
+            const leaf = document.createElement('div');
+            leaf.className = 'flip-leaf';
+
+            if (dir === 'forward') {
+                leaf.style.left = (lW + sW) + 'px';
+                leaf.style.width = rW + 'px';
+                leaf.style.transformOrigin = '0 50%';
+            } else {
+                leaf.style.left  = '0';
+                leaf.style.width = (lW || rW) + 'px';
+                leaf.style.transformOrigin = '100% 50%';
+            }
+
+            leaf.appendChild(makeFace(frontSrc, false));
+            leaf.appendChild(makeFace(backSrc,  true));
+
+            const sL = makeShade('to right');
+            const sR = makeShade('to left');
+            pl.appendChild(sL);
+            pr.appendChild(sR);
+
+            if (dir === 'forward') setPage(pr, otherSrc);
+            else                   setPage(pl, otherSrc);
+
+            fSpread.appendChild(leaf);
+
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                leaf.style.transition = 'transform 0.65s cubic-bezier(0.42,0,0.28,1)';
+                sL.style.opacity = '0.5';
+                sR.style.opacity = '0.5';
+                leaf.style.transform = dir === 'forward' ? 'rotateY(-180deg)' : 'rotateY(180deg)';
+            }));
+
+            setTimeout(() => {
+                if (dir === 'forward') setPage(pl, backSrc);
+                else                   setPage(pr, backSrc);
+                leaf.remove(); sL.remove(); sR.remove();
+                flipAnim = false;
+                onDone();
+            }, 680);
+        }
+
+        function makeFace(src, isBack) {
+            const d = document.createElement('div');
+            d.className = 'flip-face' + (isBack ? ' flip-face-back' : '');
+            if (src) { const img = new Image(); img.src = src; d.appendChild(img); }
+            else { d.style.background = 'linear-gradient(110deg,#f4f0e8,#e8e2d4)'; }
+            return d;
+        }
+
+        function makeShade(direction) {
+            const d = document.createElement('div');
+            d.className = 'flip-shade';
+            d.style.background = 'linear-gradient(' + direction + ',transparent 0%,rgba(0,0,0,0.2) 100%)';
+            return d;
+        }
+    }());
     </script>
 </body>
 </html>
