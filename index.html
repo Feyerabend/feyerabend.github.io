@@ -169,6 +169,24 @@
             pointer-events: none;
         }
 
+        .hero-image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.52) 0%, transparent 100%);
+            padding: 1.4rem;
+            pointer-events: none;
+        }
+
+        .hero-image-caption span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #fafaf8;
+        }
+
         .hero-content {
             padding-top: 2rem;
         }
@@ -715,6 +733,7 @@
         <section class="hero">
             <div class="hero-image">
                 <img src="https://feyerabend.github.io/assets/images/set.jpg" alt="Set Lonnert">
+                <div class="hero-image-caption"><span>Internetguiden 1995</span></div>
             </div>
             <div class="hero-content">
                 <span class="intro-label">Since 1980</span>
