@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Set Lonnert – Humanistics & Technology</title>
+    <title>The Conditions of Intelligence – Set Lonnert</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=IBM+Plex+Mono:wght@300;400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
@@ -37,7 +37,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated grain texture */
         body::before {
             content: '';
             position: fixed;
@@ -73,23 +72,23 @@
             z-index: 2;
         }
 
-        /* Header */
         header {
             padding: 3rem 0 2rem;
             border-bottom: 1px solid var(--border);
             animation: slideDown 0.8s ease-out;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
+
+        .header-left {}
 
         .site-title {
             font-family: 'Fraunces', serif;
@@ -117,158 +116,53 @@
             margin-top: 0.5rem;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 4rem 0;
+        .back-link {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Book hero ── */
+        .book-hero {
+            padding: 5rem 0;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 340px 1fr;
             gap: 4rem;
             align-items: start;
             animation: fadeIn 1s ease-out 0.3s both;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-image {
+        .book-cover-wrap {
             position: relative;
-            aspect-ratio: 3/4;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            background: var(--bg-secondary);
         }
 
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%) contrast(1.05);
-            transition: transform 0.6s ease;
-        }
-
-        .hero-image:hover img {
-            transform: scale(1.03);
-        }
-
-        .hero-image::after {
-            content: '';
+        .coming-soon-badge {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(196, 40, 54, 0.12) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-image-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.52) 0%, transparent 100%);
-            padding: 1.4rem;
-            pointer-events: none;
-        }
-
-        .hero-image-caption span {
+            top: -1rem;
+            right: -1rem;
+            z-index: 10;
+            background: var(--accent);
+            color: #fafaf8;
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #fafaf8;
-        }
-
-        .hero-content {
-            padding-top: 2rem;
-        }
-
-        .intro-label {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: var(--highlight);
-            border-left: 3px solid var(--accent);
-        }
-
-        .intro-text {
-            font-size: clamp(1.1rem, 2vw, 1.3rem);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-        }
-
-        .intro-text strong {
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .timeline-note {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border-left: 3px solid var(--border);
-            margin: 2rem 0;
-            font-weight: 300;
-        }
-
-        /* Featured Work */
-        .featured {
-            padding: 5rem 0;
-            border-top: 1px solid var(--border);
-            animation: fadeIn 1s ease-out 0.6s both;
-        }
-
-        .section-header {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 300;
-            margin-bottom: 3rem;
-            letter-spacing: -0.02em;
-            font-variation-settings: "opsz" 120;
-        }
-
-        .featured-book {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 3rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, var(--highlight) 0%, var(--bg-secondary) 100%);
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            box-shadow: 0 0 0 0 rgba(196, 40, 54, 0);
-        }
-
-        .featured-book:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(196, 40, 54, 0.08);
-        }
-
-        .featured-book::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--accent);
+            padding: 0.45rem 0.9rem;
+            box-shadow: 0 4px 16px rgba(196, 40, 54, 0.35);
         }
 
         .book-cover {
@@ -312,6 +206,194 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: #fafaf8;
+        }
+
+        .book-info {
+            padding-top: 1rem;
+        }
+
+        .book-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--highlight);
+            border-left: 3px solid var(--accent);
+        }
+
+        .book-title {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.6rem;
+            font-variation-settings: "opsz" 120;
+        }
+
+        .book-subtitle {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+
+        .book-desc {
+            font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+            line-height: 1.85;
+            color: var(--text-primary);
+            margin-bottom: 1.4rem;
+        }
+
+        .book-desc strong {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .availability-note {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding: 1.4rem;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--border);
+            margin: 2rem 0;
+            font-weight: 300;
+        }
+
+        /* ── Themes section ── */
+        .themes {
+            padding: 5rem 0;
+            border-top: 1px solid var(--border);
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        .section-header {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+            font-variation-settings: "opsz" 120;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .theme-card {
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .theme-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover::before { transform: scaleX(1); }
+
+        .theme-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196, 40, 54, 0.1);
+            background: linear-gradient(135deg, var(--highlight) 0%, var(--bg-secondary) 100%);
+        }
+
+        .theme-card h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .theme-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 4rem 0 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 5rem;
+            animation: fadeIn 1s ease-out 1.2s both;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .footer-brand { flex: 1; min-width: 250px; }
+
+        .footer-brand h4 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .footer-links { display: flex; gap: 3rem; }
+
+        .footer-column h5 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-column a {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover { color: var(--accent); }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
         }
 
         /* ── Flipbook modal ── */
@@ -505,212 +587,26 @@
             .flip-pl, .flip-spine { display: none !important; }
         }
 
-        .book-details h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .book-details p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .book-details a {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid var(--accent);
-            padding-bottom: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .book-details a:hover {
-            color: var(--text-primary);
-            border-bottom-color: var(--text-primary);
-        }
-
-        /* Philosophy Section */
-        .philosophy {
-            padding: 5rem 0;
-            border-top: 1px solid var(--border);
-            animation: fadeIn 1s ease-out 0.9s both;
-        }
-
-        .philosophy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .philosophy-card {
-            padding: 2rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .philosophy-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .philosophy-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .philosophy-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(196, 40, 54, 0.1);
-            background: linear-gradient(135deg, var(--highlight) 0%, var(--bg-secondary) 100%);
-        }
-
-        .philosophy-card h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .philosophy-card p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-        }
-
-        /* Footer */
-        footer {
-            padding: 4rem 0 3rem;
-            border-top: 1px solid var(--border);
-            margin-top: 5rem;
-            animation: fadeIn 1s ease-out 1.2s both;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 3rem;
-        }
-
-        .footer-brand {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .footer-brand h4 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 1rem;
-        }
-
-        .footer-brand p {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 3rem;
-        }
-
-        .footer-column h5 {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .footer-column a {
-            display: block;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: var(--accent);
-        }
-
-        .copyright {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 1024px) {
-            .hero {
+            .book-hero {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
-
-            .featured-book {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .book-cover {
-                max-width: 300px;
-                margin: 0 auto;
+            .book-cover-wrap {
+                max-width: 340px;
             }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 0 1.5rem;
-            }
-
-            header {
-                padding: 2rem 0 1.5rem;
-            }
-
-            .hero {
-                padding: 3rem 0;
-            }
-
-            .featured, .philosophy {
-                padding: 3rem 0;
-            }
-
-            .philosophy-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 2rem;
-            }
+            .container { padding: 0 1.5rem; }
+            header { padding: 2rem 0 1.5rem; }
+            .book-hero { padding: 3rem 0; }
+            .themes { padding: 3rem 0; }
+            .themes-grid { grid-template-columns: 1fr; }
+            .footer-links { flex-direction: column; gap: 2rem; }
         }
 
-        /* Scroll-triggered animations */
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
@@ -726,102 +622,76 @@
 <body>
     <div class="container">
         <header>
-            <h1 class="site-title">Set Lonnert<br>Humanistics <span class="ampersand">&</span> Technology</h1>
-            <p class="site-subtitle">Since 1980 • Humanistics • Philosophy • Computing</p>
+            <div class="header-left">
+                <h1 class="site-title">Set Lonnert<br>Humanistics <span class="ampersand">&</span> Technology</h1>
+                <p class="site-subtitle">Since 1980 • Humanistics • Philosophy • Computing</p>
+            </div>
+            <a class="back-link" href="index.html">← Back to main page</a>
         </header>
 
-        <section class="hero">
-            <div class="hero-image">
-                <img src="https://feyerabend.github.io/assets/images/set.jpg" alt="Set Lonnert">
-                <div class="hero-image-caption"><span>From Printed Magazine: Internetguiden 1995</span></div>
-            </div>
-            <div class="hero-content">
-                <span class="intro-label">Since 1980</span>
-                <p class="intro-text">
-                    <strong>Combining humanities and technology</strong> since 1980. 
-                    When there were only 23,500 webservers in 1995, I had already been working with computers 
-                    for fifteen years, exploring the intersection of analytical philosophy and computing—a 
-                    perspective that remains crucial for bringing clarity and simplicity to our digital world.
-                </p>
-                <p class="intro-text">
-                    With experience spanning over four decades and academic training in the humanities, 
-                    I bring a unique lens to understanding how technology shapes society and human experience.
-                </p>
-                <div class="timeline-note">
-                    <strong>1980:</strong> Computing journey begins<br>
-                    <strong>1995:</strong> 23,500 webservers, homepage launched<br>
-                    <strong>1998:</strong> 2.4M websites (Google launches)<br>
-                    <strong>2022:</strong> SLHT celebrates 25 years<br>
-                    <strong>Today:</strong> Still bridging worlds
-                </div>
-            </div>
-        </section>
-
-        <section class="featured">
-            <h2 class="section-header">Featured Work</h2>
-            <div class="featured-book">
+        <section class="book-hero">
+            <div class="book-cover-wrap">
+                <span class="coming-soon-badge">Coming Soon</span>
                 <div class="book-cover" id="flip-trigger" role="button" tabindex="0"
-                     title="Browse inside">
-                    <img src="assets/images/omslag.jpg" alt="From Code to Computation – cover">
-                    <div class="book-cover-hint"><span>Browse inside →</span></div>
-                </div>
-                <div class="book-details">
-                    <h3>From Code to Computation (2026)</h3>
-                    <p>
-                        A comprehensive exploration of computing from first principles, examining the philosophical 
-                        and practical foundations that underpin our digital age. Available at major bookstores.
-                    </p>
-                    <p style="margin-top: 1.5rem;">
-                        <a href="https://github.com/Feyerabend/cc/tree/main" target="_blank">View Repository →</a>
-                    </p>
+                     title="Browse inside – read a summary">
+                    <img src="assets/images/cover.png" alt="The Conditions of Intelligence – cover">
+                    <div class="book-cover-hint"><span>Browse summary →</span></div>
                 </div>
             </div>
 
-            <div class="featured-book" style="margin-top: 2rem;">
-                <div class="book-cover" style="cursor:default; max-width: 300px;">
-                    <img src="assets/images/cover.png" alt="The Conditions of Intelligence – cover">
-                </div>
-                <div class="book-details">
-                    <h3>The Conditions of Intelligence (2026)</h3>
-                    <p>
-                        <em>Artificial Minds, Human Questions.</em> A philosophical inquiry into what
-                        intelligence requires — examining the assumptions hidden inside our models and
-                        the human questions no algorithm can dissolve. Coming soon to major bookstores.
-                    </p>
-                    <p style="margin-top: 1.5rem;">
-                        <a href="conditions.html">Preview &amp; Summary →</a>
-                    </p>
+            <div class="book-info">
+                <span class="book-label">New Book – 2026</span>
+                <h2 class="book-title">The Conditions of Intelligence</h2>
+                <p class="book-subtitle">Artificial Minds, Human Questions</p>
+
+                <p class="book-desc">
+                    <strong>What does it mean to think?</strong> As artificial systems grow ever more
+                    capable, the question rebounds on us with fresh urgency. This book approaches the rise
+                    of machine intelligence not through hype or alarm, but through careful philosophical
+                    inquiry — tracing the conditions that make intelligence possible and asking what those
+                    conditions reveal about us.
+                </p>
+                <p class="book-desc">
+                    Drawing on four decades of work at the intersection of computing and the humanities,
+                    Set Lonnert examines the assumptions hidden inside our models, the human questions
+                    that no algorithm can dissolve, and why clarity of thought matters more than ever in
+                    an age of artificial minds.
+                </p>
+
+                <div class="availability-note">
+                    <strong>Available shortly</strong> at major bookstores.<br>
+                    Click the cover above to browse the summary.
                 </div>
             </div>
         </section>
 
-        <section class="philosophy">
-            <h2 class="section-header">Philosophy in Practice</h2>
-            <div class="philosophy-grid">
-                <div class="philosophy-card">
-                    <h3>Analytical Clarity</h3>
+        <section class="themes fade-in-up">
+            <h2 class="section-header">Themes</h2>
+            <div class="themes-grid">
+                <div class="theme-card">
+                    <h3>What Intelligence Requires</h3>
                     <p>
-                        Bringing the precision of analytical philosophy to the often murky world of technology. 
-                        Clear concepts lead to better understanding and more thoughtful implementation.
-                        This clarity helps e.g., expose hidden assumptions and prevents confusion from propagating
-                        into systems that must operate reliably at scale.
+                        Intelligence is not a property that emerges from scale alone. The book examines
+                        the logical, embodied, and social conditions that any genuinely intelligent system
+                        must satisfy — and where current AI architectures fall short or succeed in
+                        unexpected ways.
                     </p>
                 </div>
-                <div class="philosophy-card">
-                    <h3>Historical Perspective</h3>
+                <div class="theme-card">
+                    <h3>The Human in the Question</h3>
                     <p>
-                        Over four decades of computing experience provides context that's invaluable for 
-                        understanding current trends and anticipating future developments.
-                        It also sharpens the ability to distinguish enduring principles from short-lived trends.
+                        Every debate about artificial minds is also a debate about natural ones.
+                        Humanistic inquiry offers tools — conceptual analysis, historical context,
+                        close reading — that engineering alone cannot provide when the object of study
+                        is intelligence itself.
                     </p>
                 </div>
-                <div class="philosophy-card">
-                    <h3>Humanistic Technology</h3>
+                <div class="theme-card">
+                    <h3>Clarity Over Certainty</h3>
                     <p>
-                        Technology exists within society, not separate from it. Every technical decision
-                        has human implications that deserve careful consideration. And every system we design,
-                        deploy, or maintain carries with it assumptions about how people should live, work,
-                        and interact with one another.
+                        Rather than settling grand questions, the goal is precision: sharpening the
+                        distinctions that get blurred in popular discourse, exposing the assumptions
+                        embedded in everyday talk about AI, and making it easier to think and argue well.
                     </p>
                 </div>
             </div>
@@ -840,12 +710,12 @@
                 <div class="footer-links">
                     <div class="footer-column">
                         <h5>Resources</h5>
-                        <a href="https://feyerabend.github.io/assets/pdfs/publ.pdf" target="_blank">Publications</a>
+                        <a href="assets/pdfs/publ.pdf" target="_blank">Publications</a>
                         <a href="https://github.com/Feyerabend/cc/tree/main" target="_blank">GitHub Repository</a>
                     </div>
                     <div class="footer-column">
                         <h5>About</h5>
-                        <!--<a href="#">Background</a>-->
+                        <a href="index.html">Main Page</a>
                         <a href="mailto:setlonnert@gmail.com">Contact</a>
                     </div>
                 </div>
@@ -888,33 +758,24 @@
     </div>
 
     <script>
-        // Scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, observerOptions);
-
         document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
     </script>
 
     <script>
-    // ── Flipbook ──
     (function () {
         'use strict';
 
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        const COVER_URL = 'assets/images/omslag.jpg';
-        const PDF_URL   = 'assets/pdfs/flip.pdf';
+        const COVER_URL = 'assets/images/cover.png';
+        const PDF_URL   = 'assets/pdfs/summary.pdf';
 
         const pages  = [];
         let spread   = 0;
@@ -937,8 +798,7 @@
         const lnum     = document.getElementById('flip-lnum');
         const rnum     = document.getElementById('flip-rnum');
 
-        // Open / close
-        function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; if (!loaded) loadPages(); }
+        function openModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; if (!loaded) loadPages(); }
         function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
 
         document.getElementById('flip-trigger').addEventListener('click', openModal);
@@ -947,19 +807,18 @@
         modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
         document.addEventListener('keydown', e => {
             if (!modal.classList.contains('open')) return;
-            if (e.key === 'Escape')    closeModal();
+            if (e.key === 'Escape')                        closeModal();
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flipForward();
             if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   flipBack();
         });
         prevBtn.addEventListener('click', () => flipBack());
         nextBtn.addEventListener('click', () => flipForward());
 
-        // Load pages
         async function loadPages() {
             loadDiv.style.display  = 'flex';
             bookWrap.style.display = 'none';
 
-            pages.push(COVER_URL);   // cover: use URL directly
+            pages.push(COVER_URL);
 
             msgEl.textContent = 'Loading PDF…';
             const buf = await fetch(PDF_URL).then(r => r.arrayBuffer());
@@ -967,7 +826,6 @@
             const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
             const n   = pdf.numPages;
 
-            // Scale to fit modal
             const p1  = await pdf.getPage(1);
             const vp1 = p1.getViewport({ scale: 1 });
             const maxH = Math.round(window.innerHeight * 0.72);
@@ -997,7 +855,6 @@
             bookWrap.style.display = 'flex';
         }
 
-        // Spread helpers
         function getSpread(idx) {
             if (idx === 0) return [null, pages[0]];
             return [pages[2 * idx - 1] || null, pages[2 * idx] || null];
@@ -1028,7 +885,6 @@
             }
         }
 
-        // Navigation
         function flipForward() {
             if (flipAnim || spread >= nSpreads - 1) return;
             const [, curR]  = getSpread(spread);
