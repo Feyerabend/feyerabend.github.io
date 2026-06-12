@@ -251,7 +251,6 @@
             background: linear-gradient(135deg, var(--highlight) 0%, var(--bg-secondary) 100%);
             border: 1px solid var(--border);
             position: relative;
-            overflow: hidden;
             transition: transform 0.3s ease;
             box-shadow: 0 0 0 0 rgba(196, 40, 54, 0);
         }
@@ -503,6 +502,25 @@
 
         @media (max-width: 580px) {
             .flip-pl, .flip-spine { display: none !important; }
+        }
+
+        .book-cover-wrap {
+            position: relative;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: -1rem;
+            right: -1rem;
+            z-index: 10;
+            background: var(--accent);
+            color: #fafaf8;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.45rem 0.9rem;
+            box-shadow: 0 4px 16px rgba(196, 40, 54, 0.35);
         }
 
         .book-details h3 {
@@ -778,8 +796,13 @@
             </div>
 
             <div class="featured-book" style="margin-top: 2rem;">
-                <div class="book-cover" style="cursor:default; max-width: 300px;">
-                    <img src="assets/images/cover.png" alt="The Conditions of Intelligence – cover">
+                <div class="book-cover-wrap">
+                    <span class="coming-soon-badge">Coming Soon</span>
+                    <div class="book-cover" id="ci-flip-trigger" role="button" tabindex="0"
+                         title="Browse inside">
+                        <img src="assets/images/cover.png" alt="The Conditions of Intelligence – cover">
+                        <div class="book-cover-hint"><span>Browse inside →</span></div>
+                    </div>
                 </div>
                 <div class="book-details">
                     <h3>The Conditions of Intelligence (2026)</h3>
@@ -788,8 +811,27 @@
                         intelligence requires — examining the assumptions hidden inside our models and
                         the human questions no algorithm can dissolve. Coming soon to major bookstores.
                     </p>
-                    <p style="margin-top: 1.5rem;">
-                        <a href="conditions.html">Preview &amp; Summary →</a>
+                </div>
+            </div>
+
+            <div class="featured-book" style="margin-top: 2rem;">
+                <div class="book-cover-wrap">
+                    <span class="coming-soon-badge">Coming Soon</span>
+                    <div class="book-cover" id="wl-flip-trigger" role="button" tabindex="0"
+                         title="Browse inside">
+                        <img src="assets/images/cover3.png" alt="The Worldless Machine – cover">
+                        <div class="book-cover-hint"><span>Browse inside →</span></div>
+                    </div>
+                </div>
+                <div class="book-details">
+                    <h3>The Worldless Machine (2026)</h3>
+                    <p>
+                        <em>Language, Labor, and the Conditions That Produced AI.</em>
+                        When large language models began producing fluent text, the concepts we use
+                        to describe minds — understanding, meaning, feeling — stopped working the way
+                        they always had. Not because the concepts were wrong. Because they were formed
+                        for a world that had never before contained anything like this. Coming soon
+                        to major bookstores.
                     </p>
                 </div>
             </div>
@@ -856,37 +898,6 @@
         </footer>
     </div>
 
-    <!-- Flipbook modal -->
-    <div class="flip-modal" id="flip-modal" role="dialog" aria-modal="true" aria-label="Flipbook viewer">
-        <div class="flip-inner">
-            <button class="flip-close" id="flip-close" aria-label="Close">×</button>
-
-            <div class="flip-loading" id="flip-loading">
-                <div class="flip-prog-track">
-                    <div class="flip-prog-bar" id="flip-prog"></div>
-                </div>
-                <span class="flip-loading-msg" id="flip-msg">Loading…</span>
-            </div>
-
-            <div class="flip-book-wrap" id="flip-book-wrap">
-                <div class="flip-spread" id="flip-spread">
-                    <div class="flip-page flip-pl flip-blank" id="flip-pl">
-                        <span class="flip-pnum" id="flip-lnum"></span>
-                    </div>
-                    <div class="flip-spine" id="flip-spine-el"></div>
-                    <div class="flip-page flip-pr" id="flip-pr">
-                        <span class="flip-pnum" id="flip-rnum"></span>
-                    </div>
-                </div>
-                <div class="flip-controls">
-                    <button class="flip-nav" id="flip-prev" disabled>← Prev</button>
-                    <span   class="flip-info" id="flip-info">1 / 1</span>
-                    <button class="flip-nav" id="flip-next">Next →</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Scroll-triggered animations
         const observerOptions = {
@@ -906,205 +917,229 @@
     </script>
 
     <script>
-    // ── Flipbook ──
     (function () {
         'use strict';
 
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        const COVER_URL = 'assets/images/omslag.jpg';
-        const PDF_URL   = 'assets/pdfs/flip.pdf';
+        function createFlipbook(triggerId, coverUrl, pdfUrl) {
+            const modal = document.createElement('div');
+            modal.className = 'flip-modal';
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            modal.setAttribute('aria-label', 'Flipbook viewer');
+            modal.innerHTML =
+                '<div class="flip-inner">' +
+                  '<button class="flip-close" aria-label="Close">\xd7</button>' +
+                  '<div class="flip-loading">' +
+                    '<div class="flip-prog-track"><div class="flip-prog-bar"></div></div>' +
+                    '<span class="flip-loading-msg">Loading…</span>' +
+                  '</div>' +
+                  '<div class="flip-book-wrap">' +
+                    '<div class="flip-spread">' +
+                      '<div class="flip-page flip-pl flip-blank"><span class="flip-pnum"></span></div>' +
+                      '<div class="flip-spine"></div>' +
+                      '<div class="flip-page flip-pr"><span class="flip-pnum"></span></div>' +
+                    '</div>' +
+                    '<div class="flip-controls">' +
+                      '<button class="flip-nav" disabled>← Prev</button>' +
+                      '<span class="flip-info">1 / 1</span>' +
+                      '<button class="flip-nav">Next →</button>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>';
+            document.body.appendChild(modal);
 
-        const pages  = [];
-        let spread   = 0;
-        let nSpreads = 0;
-        let flipAnim = false;
-        let loaded   = false;
+            const loadDiv  = modal.querySelector('.flip-loading');
+            const bookWrap = modal.querySelector('.flip-book-wrap');
+            const progEl   = modal.querySelector('.flip-prog-bar');
+            const msgEl    = modal.querySelector('.flip-loading-msg');
+            const fSpread  = modal.querySelector('.flip-spread');
+            const pl       = modal.querySelector('.flip-pl');
+            const pr       = modal.querySelector('.flip-pr');
+            const spineEl  = modal.querySelector('.flip-spine');
+            const navBtns  = modal.querySelectorAll('.flip-nav');
+            const prevBtn  = navBtns[0];
+            const nextBtn  = navBtns[1];
+            const infoEl   = modal.querySelector('.flip-info');
+            const pnums    = modal.querySelectorAll('.flip-pnum');
+            const lnum     = pnums[0];
+            const rnum     = pnums[1];
 
-        const modal    = document.getElementById('flip-modal');
-        const loadDiv  = document.getElementById('flip-loading');
-        const bookWrap = document.getElementById('flip-book-wrap');
-        const progEl   = document.getElementById('flip-prog');
-        const msgEl    = document.getElementById('flip-msg');
-        const fSpread  = document.getElementById('flip-spread');
-        const pl       = document.getElementById('flip-pl');
-        const pr       = document.getElementById('flip-pr');
-        const spineEl  = document.getElementById('flip-spine-el');
-        const prevBtn  = document.getElementById('flip-prev');
-        const nextBtn  = document.getElementById('flip-next');
-        const infoEl   = document.getElementById('flip-info');
-        const lnum     = document.getElementById('flip-lnum');
-        const rnum     = document.getElementById('flip-rnum');
+            const pages  = [];
+            let spread   = 0;
+            let nSpreads = 0;
+            let flipAnim = false;
+            let loaded   = false;
 
-        // Open / close
-        function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; if (!loaded) loadPages(); }
-        function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+            function openModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; if (!loaded) loadPages(); }
+            function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
 
-        document.getElementById('flip-trigger').addEventListener('click', openModal);
-        document.getElementById('flip-trigger').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(); });
-        document.getElementById('flip-close').addEventListener('click', closeModal);
-        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-        document.addEventListener('keydown', e => {
-            if (!modal.classList.contains('open')) return;
-            if (e.key === 'Escape')    closeModal();
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flipForward();
-            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   flipBack();
-        });
-        prevBtn.addEventListener('click', () => flipBack());
-        nextBtn.addEventListener('click', () => flipForward());
+            const trigger = document.getElementById(triggerId);
+            trigger.addEventListener('click', openModal);
+            trigger.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(); });
+            modal.querySelector('.flip-close').addEventListener('click', closeModal);
+            modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', e => {
+                if (!modal.classList.contains('open')) return;
+                if (e.key === 'Escape')                              closeModal();
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flipForward();
+                if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   flipBack();
+            });
+            prevBtn.addEventListener('click', () => flipBack());
+            nextBtn.addEventListener('click', () => flipForward());
 
-        // Load pages
-        async function loadPages() {
-            loadDiv.style.display  = 'flex';
-            bookWrap.style.display = 'none';
+            async function loadPages() {
+                loadDiv.style.display  = 'flex';
+                bookWrap.style.display = 'none';
+                pages.push(coverUrl);
 
-            pages.push(COVER_URL);   // cover: use URL directly
+                msgEl.textContent = 'Loading PDF…';
+                const buf = await fetch(pdfUrl).then(r => r.arrayBuffer());
+                msgEl.textContent = 'Parsing…';
+                const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+                const n   = pdf.numPages;
 
-            msgEl.textContent = 'Loading PDF…';
-            const buf = await fetch(PDF_URL).then(r => r.arrayBuffer());
-            msgEl.textContent = 'Parsing…';
-            const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
-            const n   = pdf.numPages;
+                const p1  = await pdf.getPage(1);
+                const vp1 = p1.getViewport({ scale: 1 });
+                const maxH = Math.round(window.innerHeight * 0.72);
+                const maxW = Math.round((window.innerWidth * 0.82) / 2);
+                const s   = Math.min(maxH / vp1.height, maxW / vp1.width, 1.8);
+                const vps = p1.getViewport({ scale: s });
+                document.documentElement.style.setProperty('--fpw', Math.round(vps.width)  + 'px');
+                document.documentElement.style.setProperty('--fph', Math.round(vps.height) + 'px');
 
-            // Scale to fit modal
-            const p1  = await pdf.getPage(1);
-            const vp1 = p1.getViewport({ scale: 1 });
-            const maxH = Math.round(window.innerHeight * 0.72);
-            const maxW = Math.round((window.innerWidth  * 0.82) / 2);
-            const s   = Math.min(maxH / vp1.height, maxW / vp1.width, 1.8);
-            const vps = p1.getViewport({ scale: s });
-            document.documentElement.style.setProperty('--fpw', Math.round(vps.width)  + 'px');
-            document.documentElement.style.setProperty('--fph', Math.round(vps.height) + 'px');
+                for (let i = 1; i <= n; i++) {
+                    msgEl.textContent = 'Rendering ' + i + ' / ' + n + '…';
+                    progEl.style.width = ((i / n) * 100) + '%';
+                    const page = await pdf.getPage(i);
+                    const vp   = page.getViewport({ scale: s });
+                    const cv   = document.createElement('canvas');
+                    cv.width   = Math.round(vp.width);
+                    cv.height  = Math.round(vp.height);
+                    await page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+                    pages.push(cv.toDataURL('image/jpeg', 0.93));
+                }
 
-            for (let i = 1; i <= n; i++) {
-                msgEl.textContent = 'Rendering ' + i + ' / ' + n + '…';
-                progEl.style.width = ((i / n) * 100) + '%';
-                const page = await pdf.getPage(i);
-                const vp   = page.getViewport({ scale: s });
-                const cv   = document.createElement('canvas');
-                cv.width   = Math.round(vp.width);
-                cv.height  = Math.round(vp.height);
-                await page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
-                pages.push(cv.toDataURL('image/jpeg', 0.93));
+                loaded   = true;
+                nSpreads = 1 + Math.ceil(Math.max(pages.length - 1, 0) / 2);
+                spread   = 0;
+                renderSpread();
+                loadDiv.style.display  = 'none';
+                bookWrap.style.display = 'flex';
             }
 
-            loaded   = true;
-            nSpreads = 1 + Math.ceil(Math.max(pages.length - 1, 0) / 2);
-            spread   = 0;
-            renderSpread();
-            loadDiv.style.display  = 'none';
-            bookWrap.style.display = 'flex';
-        }
+            function getSpread(idx) {
+                if (idx === 0) return [null, pages[0]];
+                return [pages[2 * idx - 1] || null, pages[2 * idx] || null];
+            }
 
-        // Spread helpers
-        function getSpread(idx) {
-            if (idx === 0) return [null, pages[0]];
-            return [pages[2 * idx - 1] || null, pages[2 * idx] || null];
-        }
+            function renderSpread() {
+                const [l, r] = getSpread(spread);
+                setPage(pl, l);
+                setPage(pr, r);
+                lnum.textContent = (spread > 0 && pages[2 * spread - 1]) ? String(2 * spread - 1) : '';
+                rnum.textContent = spread === 0 ? 'Cover' : (pages[2 * spread] ? String(2 * spread) : '');
+                prevBtn.disabled = spread === 0;
+                nextBtn.disabled = spread >= nSpreads - 1;
+                infoEl.textContent = (spread + 1) + ' / ' + nSpreads;
+            }
 
-        function renderSpread() {
-            const [l, r] = getSpread(spread);
-            setPage(pl, l);
-            setPage(pr, r);
-            lnum.textContent = (spread > 0 && pages[2 * spread - 1]) ? String(2 * spread - 1) : '';
-            rnum.textContent = spread === 0 ? 'Cover' : (pages[2 * spread] ? String(2 * spread) : '');
-            prevBtn.disabled = spread === 0;
-            nextBtn.disabled = spread >= nSpreads - 1;
-            infoEl.textContent = (spread + 1) + ' / ' + nSpreads;
-        }
+            function setPage(el, src) {
+                const numEl = el.querySelector('.flip-pnum');
+                el.innerHTML = '';
+                el.appendChild(numEl);
+                if (src) {
+                    el.classList.remove('flip-blank');
+                    const img = new Image();
+                    img.src = src;
+                    el.insertBefore(img, numEl);
+                } else {
+                    el.classList.add('flip-blank');
+                }
+            }
 
-        function setPage(el, src) {
-            const numEl = el.querySelector('.flip-pnum');
-            el.innerHTML = '';
-            el.appendChild(numEl);
-            if (src) {
-                el.classList.remove('flip-blank');
-                const img = new Image();
-                img.src = src;
-                el.insertBefore(img, numEl);
-            } else {
-                el.classList.add('flip-blank');
+            function flipForward() {
+                if (flipAnim || spread >= nSpreads - 1) return;
+                const [, curR] = getSpread(spread);
+                const [nL, nR] = getSpread(spread + 1);
+                doFlip('forward', curR, nL, nR, () => { spread++; renderSpread(); });
+            }
+
+            function flipBack() {
+                if (flipAnim || spread <= 0) return;
+                const [curL]   = getSpread(spread);
+                const [pL, pR] = getSpread(spread - 1);
+                doFlip('backward', curL, pR, pL, () => { spread--; renderSpread(); });
+            }
+
+            function doFlip(dir, frontSrc, backSrc, otherSrc, onDone) {
+                flipAnim = true;
+                const sW = spineEl.offsetWidth || 10;
+                const lW = pl.offsetWidth;
+                const rW = pr.offsetWidth;
+
+                const leaf = document.createElement('div');
+                leaf.className = 'flip-leaf';
+                if (dir === 'forward') {
+                    leaf.style.left = (lW + sW) + 'px';
+                    leaf.style.width = rW + 'px';
+                    leaf.style.transformOrigin = '0 50%';
+                } else {
+                    leaf.style.left  = '0';
+                    leaf.style.width = (lW || rW) + 'px';
+                    leaf.style.transformOrigin = '100% 50%';
+                }
+
+                leaf.appendChild(makeFace(frontSrc, false));
+                leaf.appendChild(makeFace(backSrc,  true));
+
+                const sL = makeShade('to right');
+                const sR = makeShade('to left');
+                pl.appendChild(sL);
+                pr.appendChild(sR);
+
+                if (dir === 'forward') setPage(pr, otherSrc);
+                else                   setPage(pl, otherSrc);
+
+                fSpread.appendChild(leaf);
+
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    leaf.style.transition = 'transform 0.65s cubic-bezier(0.42,0,0.28,1)';
+                    sL.style.opacity = '0.5';
+                    sR.style.opacity = '0.5';
+                    leaf.style.transform = dir === 'forward' ? 'rotateY(-180deg)' : 'rotateY(180deg)';
+                }));
+
+                setTimeout(() => {
+                    if (dir === 'forward') setPage(pl, backSrc);
+                    else                   setPage(pr, backSrc);
+                    leaf.remove(); sL.remove(); sR.remove();
+                    flipAnim = false;
+                    onDone();
+                }, 680);
+            }
+
+            function makeFace(src, isBack) {
+                const d = document.createElement('div');
+                d.className = 'flip-face' + (isBack ? ' flip-face-back' : '');
+                if (src) { const img = new Image(); img.src = src; d.appendChild(img); }
+                else { d.style.background = 'linear-gradient(110deg,#f4f0e8,#e8e2d4)'; }
+                return d;
+            }
+
+            function makeShade(dir) {
+                const d = document.createElement('div');
+                d.className = 'flip-shade';
+                d.style.background = 'linear-gradient(' + dir + ',transparent 0%,rgba(0,0,0,0.2) 100%)';
+                return d;
             }
         }
 
-        // Navigation
-        function flipForward() {
-            if (flipAnim || spread >= nSpreads - 1) return;
-            const [, curR]  = getSpread(spread);
-            const [nL, nR]  = getSpread(spread + 1);
-            doFlip('forward', curR, nL, nR, () => { spread++; renderSpread(); });
-        }
-
-        function flipBack() {
-            if (flipAnim || spread <= 0) return;
-            const [curL]   = getSpread(spread);
-            const [pL, pR] = getSpread(spread - 1);
-            doFlip('backward', curL, pR, pL, () => { spread--; renderSpread(); });
-        }
-
-        function doFlip(dir, frontSrc, backSrc, otherSrc, onDone) {
-            flipAnim = true;
-            const sW = spineEl.offsetWidth || 10;
-            const lW = pl.offsetWidth;
-            const rW = pr.offsetWidth;
-
-            const leaf = document.createElement('div');
-            leaf.className = 'flip-leaf';
-
-            if (dir === 'forward') {
-                leaf.style.left = (lW + sW) + 'px';
-                leaf.style.width = rW + 'px';
-                leaf.style.transformOrigin = '0 50%';
-            } else {
-                leaf.style.left  = '0';
-                leaf.style.width = (lW || rW) + 'px';
-                leaf.style.transformOrigin = '100% 50%';
-            }
-
-            leaf.appendChild(makeFace(frontSrc, false));
-            leaf.appendChild(makeFace(backSrc,  true));
-
-            const sL = makeShade('to right');
-            const sR = makeShade('to left');
-            pl.appendChild(sL);
-            pr.appendChild(sR);
-
-            if (dir === 'forward') setPage(pr, otherSrc);
-            else                   setPage(pl, otherSrc);
-
-            fSpread.appendChild(leaf);
-
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                leaf.style.transition = 'transform 0.65s cubic-bezier(0.42,0,0.28,1)';
-                sL.style.opacity = '0.5';
-                sR.style.opacity = '0.5';
-                leaf.style.transform = dir === 'forward' ? 'rotateY(-180deg)' : 'rotateY(180deg)';
-            }));
-
-            setTimeout(() => {
-                if (dir === 'forward') setPage(pl, backSrc);
-                else                   setPage(pr, backSrc);
-                leaf.remove(); sL.remove(); sR.remove();
-                flipAnim = false;
-                onDone();
-            }, 680);
-        }
-
-        function makeFace(src, isBack) {
-            const d = document.createElement('div');
-            d.className = 'flip-face' + (isBack ? ' flip-face-back' : '');
-            if (src) { const img = new Image(); img.src = src; d.appendChild(img); }
-            else { d.style.background = 'linear-gradient(110deg,#f4f0e8,#e8e2d4)'; }
-            return d;
-        }
-
-        function makeShade(direction) {
-            const d = document.createElement('div');
-            d.className = 'flip-shade';
-            d.style.background = 'linear-gradient(' + direction + ',transparent 0%,rgba(0,0,0,0.2) 100%)';
-            return d;
-        }
+        createFlipbook('flip-trigger',    'assets/images/omslag.jpg', 'assets/pdfs/flip.pdf');
+        createFlipbook('ci-flip-trigger', 'assets/images/cover.png',  'assets/pdfs/summary.pdf');
+        createFlipbook('wl-flip-trigger', 'assets/images/cover3.png', 'assets/pdfs/worldless.pdf');
     }());
     </script>
 </body>
