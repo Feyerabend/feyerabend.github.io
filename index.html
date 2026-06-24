@@ -523,6 +523,24 @@
             box-shadow: 0 4px 16px rgba(196, 40, 54, 0.35);
         }
 
+        /* A softer, earlier-stage badge — weaker than "Coming Soon":
+           not yet announced or submitted, still being written. */
+        .draft-badge {
+            position: absolute;
+            top: -1rem;
+            right: -1rem;
+            z-index: 10;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px dashed var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.45rem 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
         .book-details h3 {
             font-family: 'Fraunces', serif;
             font-size: 2rem;
@@ -833,6 +851,25 @@
                         they always had. Not because the concepts were wrong. Because they were formed
                         for a world that had never before contained anything like this. Coming soon
                         to major bookstores.
+                    </p>
+                </div>
+            </div>
+
+            <div class="featured-book" style="margin-top: 2rem;">
+                <div class="book-cover-wrap">
+                    <span class="draft-badge">Planned</span>
+                    <div class="book-cover" style="cursor: default;">
+                        <img src="assets/images/cover4.png" alt="The Language Stack – cover">
+                    </div>
+                </div>
+                <div class="book-details">
+                    <h3>The Language Stack (2026)</h3>
+                    <p>
+                        <em>From Silicon to Semantics.</em> Building one small language all the
+                        way up — from a processor's fetch–decode–execute loop through lexer, parser,
+                        type system, interpreter, and a compiler that reaches real silicon — and
+                        asking, at each layer, what a programming language actually commits us to.
+                        Not yet submitted to publishers.
                     </p>
                 </div>
             </div>
