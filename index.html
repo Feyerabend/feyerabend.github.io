@@ -243,6 +243,30 @@
             font-variation-settings: "opsz" 120;
         }
 
+        .featured-group-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin: 3.5rem 0 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .featured-group-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .featured-group-label:first-of-type {
+            margin-top: 0;
+        }
+
         .featured-book {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -570,6 +594,43 @@
             border-bottom-color: var(--text-primary);
         }
 
+        /* Companion note bridging the two AI books */
+        .diptych-note {
+            max-width: 760px;
+            margin: 3rem auto;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--red-tint);
+        }
+
+        .diptych-note .diptych-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .diptych-note p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .diptych-note p:last-child {
+            margin-bottom: 0;
+        }
+
+        .diptych-note em {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
         /* Philosophy Section */
         .philosophy {
             padding: 5rem 0;
@@ -795,6 +856,23 @@
 
         <section class="featured">
             <h2 class="section-header">Featured Work</h2>
+
+            <h3 class="featured-group-label">Computing &amp; Languages</h3>
+
+            <div class="diptych-note">
+                <span class="diptych-label">Breadth and depth</span>
+                <p>
+                    <em>From Code to Computation</em> moves across the field — from logic and
+                    data through algorithms and abstraction — mapping the foundations the
+                    digital age is built on.
+                </p>
+                <p>
+                    <em>The Language Stack</em> cuts the other way, straight down through a
+                    single slice: building one small language by hand, from silicon to
+                    semantics, to feel what each layer actually commits us to.
+                </p>
+            </div>
+
             <div class="featured-book">
                 <div class="book-cover" id="flip-trigger" role="button" tabindex="0"
                      title="Browse inside">
@@ -804,7 +882,7 @@
                 <div class="book-details">
                     <h3>From Code to Computation (2026)</h3>
                     <p>
-                        A comprehensive exploration of computing from first principles, examining the philosophical 
+                        A comprehensive exploration of computing from first principles, examining the philosophical
                         and practical foundations that underpin our digital age. Available at major bookstores.
                     </p>
                     <p style="margin-top: 1.5rem;">
@@ -814,6 +892,45 @@
             </div>
 
             <div class="featured-book" style="margin-top: 2rem;">
+                <div class="book-cover-wrap">
+                    <span class="coming-soon-badge">Coming Soon</span>
+                    <!-- <span class="draft-badge">Planned</span> -->
+                    <div class="book-cover" style="cursor: default;">
+                        <img src="assets/images/cover4.png" alt="The Language Stack – cover">
+                    </div>
+                </div>
+                <div class="book-details">
+                    <h3>The Language Stack (2026)</h3>
+                    <p>
+                        <em>From Silicon to Semantics.</em> Building one small language all the
+                        way up — from a processor's fetch–decode–execute loop through lexer, parser,
+                        type system, interpreter, and a compiler that reaches real silicon — and
+                        asking, at each layer, what a programming language actually commits us to.
+                        Not yet submitted to publishers.
+                    </p>
+                    <p style="margin-top: 1.5rem;">
+                        <a href="https://github.com/Feyerabend/stack/tree/main" target="_blank">View Repository →</a>
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="featured-group-label">Minds, Machines &amp; AI</h3>
+
+            <div class="diptych-note">
+                <span class="diptych-label">Two directions, one question</span>
+                <p>
+                    <em>The Conditions of Intelligence</em> moves outward from AI systems —
+                    through architecture, consciousness, governance — toward the society they
+                    are entering.
+                </p>
+                <p>
+                    <em>The Worldless Machine</em> reverses the direction: beginning from the
+                    cultural and historical conditions that produced AI, and asking what those
+                    conditions reveal about AI's character and consequences.
+                </p>
+            </div>
+
+            <div class="featured-book">
                 <div class="book-cover-wrap">
                    <!-- <span class="coming-soon-badge">Coming Soon</span> -->
                     <div class="book-cover" id="ci-flip-trigger" role="button" tabindex="0"
@@ -851,29 +968,6 @@
                         they always had. Not because the concepts were wrong. Because they were formed
                         for a world that had never before contained anything like this. Coming soon
                         to major bookstores.
-                    </p>
-                </div>
-            </div>
-
-            <div class="featured-book" style="margin-top: 2rem;">
-                <div class="book-cover-wrap">
-                    <span class="coming-soon-badge">Coming Soon</span>
-                    <!-- <span class="draft-badge">Planned</span> -->
-                    <div class="book-cover" style="cursor: default;">
-                        <img src="assets/images/cover4.png" alt="The Language Stack – cover">
-                    </div>
-                </div>
-                <div class="book-details">
-                    <h3>The Language Stack (2026)</h3>
-                    <p>
-                        <em>From Silicon to Semantics.</em> Building one small language all the
-                        way up — from a processor's fetch–decode–execute loop through lexer, parser,
-                        type system, interpreter, and a compiler that reaches real silicon — and
-                        asking, at each layer, what a programming language actually commits us to.
-                        Not yet submitted to publishers.
-                    </p>
-                    <p style="margin-top: 1.5rem;">
-                        <a href="https://github.com/Feyerabend/stack/tree/main" target="_blank">View Repository →</a>
                     </p>
                 </div>
             </div>
