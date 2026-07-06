@@ -1,0 +1,3 @@
+A function fails on a case its type checker passed. A service left untouched for a year suddenly will not run because everything beneath it changed. One reveals the limit of rules; the other, the unfinished condition of software.
+
+This book argues that these limits are one. Every rule only shifts the frontier of what remains unruled. Software making is therefore not the work of finishing, but of staffing the unfinishable.
