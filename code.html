@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code - Set Lonnert</title>
+    <meta name="description" content="Code by Set Lonnert: virtual machines built in the open, reconstructions of systems from around 1980, and the code behind the books.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=IBM+Plex+Mono:wght@300;400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="site-title">Code</h1>
+            <p class="site-subtitle">Set Lonnert • On GitHub • 2026</p>
+            <nav class="site-nav">
+                <a href="index.html">← Set Lonnert</a>
+                <a href="books.html">Books</a>
+                <a href="code.html" aria-current="page">Code</a>
+            </nav>
+        </header>
+
+        <section class="featured">
+            <h2 class="section-header">The List</h2>
+
+            <!-- ============================================================ -->
+            <h3 class="featured-group-label" id="machines">Machines, Built in the Open</h3>
+            <p class="biblio-series-note">
+                A virtual machine is not a black box but a sequence of small, deliberate
+                choices. These repositories make the choices one at a time, where they can
+                be seen: each step is the whole machine again, with one idea more, so that
+                the difference between two steps is the lesson. From a loop in C to
+                compilers, garbage collection, native code and a circuit.
+                <a href="books.html#growing">The book: Growing a Machine →</a>
+            </p>
+
+            <ul class="biblio-list">
+                <li class="biblio-entry">
+                    <a class="biblio-thumb" href="books.html#growing"><img src="assets/images/thumbs/cover-grow.jpg" alt="Growing a Machine - cover"></a>
+                    <div class="biblio-record">
+                        <p class="biblio-title">grow</p>
+                        <p class="biblio-subtitle">The code of Growing a Machine</p>
+                        <p class="biblio-meta">
+                            C • WebAssembly • a circuit • Unlicense<br>
+                            A chapter a folder, each runnable, the last one plus an idea
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/grow" target="_blank">Repository</a>
+                            <a href="books.html#growing">The book</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">Book<br>&amp; code</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">vm</p>
+                        <p class="biblio-subtitle">Virtual Machines: one machine, built up chapter by chapter</p>
+                        <p class="biblio-meta">
+                            C • Python • Unlicense<br>
+                            From forty lines of C to compilers, garbage collection and native code
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/vm" target="_blank">Repository</a>
+                            <a href="https://github.com/Feyerabend/vm/blob/main/book/virtual-machines.pdf" target="_blank">The book (PDF)</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">6502</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">e6502</p>
+                        <p class="biblio-subtitle">A 6502 emulator, an assembler, and a tiny BASIC</p>
+                        <p class="biblio-meta">
+                            C • Python • 6502 assembly<br>
+                            From machine cycles to a language; one program on three memory architectures
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/e6502" target="_blank">Repository</a>
+                            <a href="books.html#code-crafting">The Language Stack, chapter 1</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- ============================================================ -->
+            <h3 class="featured-group-label" id="reconstructions">Reconstructions</h3>
+            <p class="biblio-series-note">
+                Systems from around 1980, rebuilt from what was published about them
+                rather than copied, so that they can be run again and read all the way
+                down. Their constraints explain their solutions: often it is the
+                architecture, more than the code, that has something to teach. Most of
+                them run in a browser tab.
+            </p>
+
+            <ul class="biblio-list">
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">Smalltalk-80<br>&amp; Star</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">Balloon</p>
+                        <p class="biblio-subtitle">Smalltalk-80 and a Star-like desktop, after the Blue Book</p>
+                        <p class="biblio-meta">
+                            C • WebAssembly • Smalltalk • MIT<br>
+                            Xerox PARC, 1980–81: the Smalltalk-80 environment, and an office desktop written in it
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/balloon" target="_blank">Repository</a>
+                            <a href="https://feyerabend.github.io/balloon/" target="_blank">Try it</a>
+                            <a href="https://feyerabend.github.io/balloon/star.html" target="_blank">The Star</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">Lisp<br>Machine</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">Lantern</p>
+                        <p class="biblio-subtitle">A Lisp Machine of your own, in a browser tab</p>
+                        <p class="biblio-meta">
+                            C • WebAssembly • Common Lisp • MIT<br>
+                            In the spirit of the MIT CADR and the Symbolics machines: windows, editor, debugger
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/lantern" target="_blank">Repository</a>
+                            <a href="https://feyerabend.github.io/lantern/lisp.html" target="_blank">Try it</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">Desktop<br>publishing</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">Galley</p>
+                        <p class="biblio-subtitle">Early desktop publishing, in one page of the browser</p>
+                        <p class="biblio-meta">
+                            JavaScript • PostScript • PDF<br>
+                            After the first PageMaker: a page on a pasteboard, columns, and text poured into them
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/galley" target="_blank">Repository</a>
+                            <a href="https://feyerabend.github.io/galley/" target="_blank">Try it</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">VisiCalc</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">Kalkylark</p>
+                        <p class="biblio-subtitle">A VisiCalc-style spreadsheet for VT100 terminals</p>
+                        <p class="biblio-meta">
+                            Portable C<br>
+                            Written from scratch, to see the architecture of the first spreadsheet
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/kalkylark" target="_blank">Repository</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <a class="biblio-thumb" href="books.html#abc80"><img src="assets/images/thumbs/cover-band-1.jpg" alt="ABC80 inifrån, Band 1 - cover"></a>
+                    <div class="biblio-record">
+                        <p class="biblio-title">ABC80</p>
+                        <p class="biblio-subtitle">Material on the Swedish home computer ABC80</p>
+                        <p class="biblio-meta">
+                            Luxor, 1978 • emulators, tools, essays<br>
+                            The game AIR-FIGHT of 1981, and the material of the book ABC80 inifrån
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/ABC80" target="_blank">Repository</a>
+                            <a href="https://feyerabend.github.io/ABC80/inifran/emulator/webb/abc80.html" target="_blank">Try it</a>
+                            <a href="books.html#abc80">The books</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- ============================================================ -->
+            <h3 class="featured-group-label" id="companions">The Code Behind the Books</h3>
+            <p class="biblio-series-note">
+                Where a book points to a program, the program is here, and runs: the
+                examples too long to print, exercises, errata and updates, and the
+                working systems the arguments rest on.
+            </p>
+
+            <ul class="biblio-list">
+                <li class="biblio-entry">
+                    <a class="biblio-thumb" href="books.html#code-crafting"><img src="assets/images/thumbs/omslag.jpg" alt="From Code to Computation - cover"></a>
+                    <div class="biblio-record">
+                        <p class="biblio-title">cc</p>
+                        <p class="biblio-subtitle">From Code to Computation</p>
+                        <p class="biblio-meta">
+                            Code Crafting • examples, exercises, updates<br>
+                            With the whole book as a free PDF
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/cc" target="_blank">Repository</a>
+                            <a href="books.html#code-crafting">The book</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <a class="biblio-thumb" href="books.html#code-crafting"><img src="assets/images/thumbs/cover4.jpg" alt="The Language Stack - cover"></a>
+                    <div class="biblio-record">
+                        <p class="biblio-title">stack</p>
+                        <p class="biblio-subtitle">The Language Stack</p>
+                        <p class="biblio-meta">
+                            Code Crafting • from the 6502 and RISC-V to type systems<br>
+                            Programs that end as native code on a Raspberry Pi Pico 2
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/stack" target="_blank">Repository</a>
+                            <a href="books.html#code-crafting">The book</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="biblio-entry">
+                    <span class="biblio-thumb no-cover">Working<br>paper</span>
+                    <div class="biblio-record">
+                        <p class="biblio-title">precize</p>
+                        <p class="biblio-subtitle">An audit record where agents stop and people decide</p>
+                        <p class="biblio-meta">
+                            JavaScript • MCP server • MIT<br>
+                            The server, its trials and findings, for the paper Who saw what
+                        </p>
+                        <p class="biblio-links">
+                            <a href="https://github.com/Feyerabend/precize" target="_blank">Repository</a>
+                            <a href="books.html#who-saw-what">The paper</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h4>Set Lonnert Humanistics &amp; Technology</h4>
+                    <p>
+                        Established 1997<br>
+                        Programming • Writing • Education<br>
+                        Articles • Books • Lectures
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Resources</h5>
+                        <a href="books.html">Books</a>
+                        <a href="code.html">Code</a>
+                        <a href="https://feyerabend.github.io/assets/pdfs/publ.pdf" target="_blank">Publications</a>
+                        <a href="https://github.com/Feyerabend" target="_blank">GitHub</a>
+                    </div>
+                    <div class="footer-column">
+                        <h5>About</h5>
+                        <a href="mailto:setlonnert@gmail.com">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                © 1997-2026 Set Lonnert Humanistics &amp; Technology. Est. when the web was young.
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/site.js"></script>
+</body>
+</html>
